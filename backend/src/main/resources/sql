@@ -1,0 +1,653 @@
+CREATE DATABASE DATN
+GO
+USE DATN
+GO
+CREATE TABLE kich_thuoc (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    ma_kich_thuoc NVARCHAR(50) NOT NULL,
+    size NVARCHAR(20) NOT NULL,
+    rong_ao FLOAT NOT NULL,
+    dai_ao FLOAT NOT NULL,
+    rong_vai FLOAT NOT NULL,
+    dai_tay FLOAT NOT NULL,
+    trang_thai BIT NOT NULL
+);
+
+CREATE TABLE thuong_hieu (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    ma_thuong_hieu NVARCHAR(50) NOT NULL,
+    ten_thuong_hieu NVARCHAR(255) NOT NULL,
+    trang_thai BIT NOT NULL
+);
+
+CREATE TABLE chat_lieu (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    ma_chat_lieu NVARCHAR(50) NOT NULL,
+    ten_chat_lieu NVARCHAR(255) NOT NULL,
+    trang_thai BIT NOT NULL
+);
+
+CREATE TABLE mau_sac (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    ma_mau_sac NVARCHAR(50) NOT NULL,
+    ten_mau_sac NVARCHAR(255) NOT NULL,
+    trang_thai BIT NOT NULL
+);
+
+CREATE TABLE hang (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    ma_hang NVARCHAR(50) NOT NULL,
+    ten_hang NVARCHAR(255) NOT NULL,
+    trang_thai BIT NOT NULL
+);
+
+CREATE TABLE xuat_xu (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    ma_xuat_xu NVARCHAR(50) NOT NULL,
+    ten_xuat_xu NVARCHAR(255) NOT NULL,
+    trang_thai BIT NOT NULL
+);
+
+CREATE TABLE co_ao (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    ma_co_ao NVARCHAR(50) NOT NULL,
+    ten_co_ao NVARCHAR(255) NOT NULL,
+    trang_thai BIT NOT NULL
+);
+
+CREATE TABLE tay_ao (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    ma_tay_ao NVARCHAR(50) NOT NULL,
+    ten_tay_ao NVARCHAR(255) NOT NULL,
+    trang_thai BIT NOT NULL
+);
+
+CREATE TABLE nha_san_xuat (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    ma_nsx NVARCHAR(50) NOT NULL,
+    ten_nsx NVARCHAR(255) NOT NULL,
+	dia_chi NVARCHAR(255) NOT NULL,
+    trang_thai BIT NOT NULL
+);
+
+CREATE TABLE khuy_ao (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    ma_khuy_ao NVARCHAR(50) NOT NULL,
+    ten_khuy_ao NVARCHAR(255) NOT NULL,
+    trang_thai BIT NOT NULL
+);
+
+CREATE TABLE danh_muc (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    ma_danh_muc NVARCHAR(10),
+    ten_danh_muc NVARCHAR(50) NOT NULL,
+    mo_ta NVARCHAR(100),
+    trang_thai BIT
+);
+
+CREATE TABLE san_pham (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    ma_sp NVARCHAR(50) NOT NULL,
+    ten_sp NVARCHAR(255) NOT NULL,
+    so_luong INT NOT NULL,
+    mo_ta NVARCHAR(255) NOT NULL,
+    trang_thai BIT NOT NULL,
+    danh_muc_id INT, -- Thêm khóa ngoại
+    FOREIGN KEY (danh_muc_id) REFERENCES danh_muc(id) ON DELETE CASCADE
+);
+
+CREATE TABLE hinh_anh(
+id int identity primary key,
+ma_anh nvarchar(10),
+ten_anh nvarchar(50),
+trang_thai bit
+)
+
+CREATE TABLE chi_tiet_san_pham (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    id_hang INT NOT NULL,
+    id_chat_lieu INT NOT NULL,
+    id_kich_thuoc INT NOT NULL,
+    id_mau_sac INT NOT NULL,
+    id_thuong_hieu INT NOT NULL,
+    id_xuat_xu INT NOT NULL,
+    id_nha_san_xuat INT NOT NULL,
+    id_san_pham INT NOT NULL,
+    id_khuy_ao INT NOT NULL,
+    id_co_ao INT NOT NULL,
+    id_tay_ao INT NOT NULL,
+	id_hinh_anh INT NOT NULL,
+
+    ma_chi_tiet_sp NVARCHAR(50) NOT NULL,
+    ten_chi_tiet_sp NVARCHAR(255) NOT NULL,
+    so_luong INT NOT NULL,
+    don_gia DECIMAL(18,2) NOT NULL,
+    ghi_chu NVARCHAR(255),
+	hinh_anh NVARCHAR(255),
+    trang_thai BIT NOT NULL,
+
+    CONSTRAINT FK_CTSP_Hang FOREIGN KEY (id_hang) REFERENCES hang(id),
+    CONSTRAINT FK_CTSP_ChatLieu FOREIGN KEY (id_chat_lieu) REFERENCES chat_lieu(id),
+    CONSTRAINT FK_CTSP_KichThuoc FOREIGN KEY (id_kich_thuoc) REFERENCES kich_thuoc(id),
+    CONSTRAINT FK_CTSP_MauSac FOREIGN KEY (id_mau_sac) REFERENCES mau_sac(id),
+    CONSTRAINT FK_CTSP_ThuongHieu FOREIGN KEY (id_thuong_hieu) REFERENCES thuong_hieu(id),
+    CONSTRAINT FK_CTSP_XuatXu FOREIGN KEY (id_xuat_xu) REFERENCES xuat_xu(id),
+    CONSTRAINT FK_CTSP_NhaSanXuat FOREIGN KEY (id_nha_san_xuat) REFERENCES nha_san_xuat(id),
+    CONSTRAINT FK_CTSP_SanPham FOREIGN KEY (id_san_pham) REFERENCES san_pham(id),
+    CONSTRAINT FK_CTSP_KhuyAo FOREIGN KEY (id_khuy_ao) REFERENCES khuy_ao(id),
+    CONSTRAINT FK_CTSP_CoAo FOREIGN KEY (id_co_ao) REFERENCES co_ao(id),
+    CONSTRAINT FK_CTSP_TayAo FOREIGN KEY (id_tay_ao) REFERENCES tay_ao(id),
+	CONSTRAINT FK_CTSP_HinhAnh FOREIGN KEY (id_hinh_anh) REFERENCES hinh_anh(id)
+);
+
+
+GO
+CREATE TABLE dot_giam_gia(
+id int identity primary key,
+ma_dot_giam_gia nvarchar(10),
+ten_dot_giam_gia nvarchar(50),
+ngay_bat_dau datetime,
+ngay_ket_thuc datetime,
+gia_tri int,
+trang_thai int
+)
+GO
+CREATE TABLE dot_giam_gia_ctsp(
+id int identity primary key,
+id_spct int foreign key references chi_tiet_san_pham(id),
+id_dot_giam_gia int foreign key references dot_giam_gia(id),
+so_tien_giam decimal(18,2),
+trang_thai bit
+)
+GO
+CREATE TABLE gio_hang(
+id int identity primary key,
+id_spct int foreign key references chi_tiet_san_pham(id),
+so_luong int,
+trang_thai bit
+)
+GO
+CREATE TABLE khach_hang(
+id int identity primary key,
+ma_khach_hang nvarchar(10),
+ho_ten nvarchar(50),
+gioi_tinh bit,
+sdt nvarchar(13),
+cccd nvarchar(20),
+dia_chi nvarchar(100),
+email nvarchar(100),
+hinh_anh NVARCHAR(255),
+ngay_sinh datetime,
+trang_thai bit,
+)
+GO
+CREATE TABLE dia_chi(
+id int identity primary key,
+id_khach_hang int foreign key references khach_hang(id),
+ma_dia_chi nvarchar(10),
+thanh_pho nvarchar(50),
+quan_huyen nvarchar(50),
+xa_phuong nvarchar(50),
+so_nha nvarchar(10),
+dia_chi_chi_tiet nvarchar(100),
+trang_thai bit
+)
+GO
+CREATE TABLE danh_gia(
+id int identity primary key,
+id_khach_hang int foreign key references khach_hang(id),
+id_spct int foreign key references chi_tiet_san_pham(id),
+so_sao decimal(18,2),
+binh_luan nvarchar(200),
+ngay_danh_gia datetime,
+trang_thai bit
+)
+GO
+CREATE TABLE phieu_giam_gia(
+id int identity primary key,
+ma_phieu_giam_gia nvarchar(10),
+ten_phieu_giam_gia nvarchar(50),
+so_luong int,
+ngay_bat_dau datetime,
+ngay_ket_thuc datetime,
+dieu_kien int,
+loai int,
+kieu bit,
+gia_tri_toi_thieu decimal(18,2),
+gia_tri_toi_da decimal(18,2),
+trang_thai bit
+)
+GO
+CREATE TABLE khach_hang_gg(
+id int identity primary key,
+id_khach_hang int foreign key references khach_hang(id),
+id_phieu_giam_gia int foreign key references phieu_giam_gia(id),
+so_tien_giam decimal(18,2),
+trang_thai bit
+)
+GO
+CREATE TABLE chuc_vu(
+id int identity primary key,
+ma_chuc_vu nvarchar(10),
+ten_chuc_vu nvarchar(50),
+trang_thai bit
+)
+GO
+CREATE TABLE nhan_vien(
+id int identity primary key,
+id_chuc_vu int foreign key references chuc_vu(id),
+ma_nhan_vien nvarchar(10),
+ho_ten nvarchar(100),
+gioi_tinh bit,
+ngay_sinh datetime,
+email nvarchar(100),
+cccd nvarchar(20),
+sdt nvarchar(13),
+mat_khau nvarchar(50),
+luong decimal(18,2),
+dia_chi nvarchar(100),
+hinh_anh NVARCHAR(255),
+trang_thai bit
+)
+GO
+CREATE TABLE hoa_don(
+id int identity primary key,
+id_khach_hang int foreign key references khach_hang(id),
+id_nhan_vien int foreign key references nhan_vien(id),
+id_phieu_giam_gia int foreign key references phieu_giam_gia(id),
+ma_hoa_don nvarchar(10),
+ngay_tao datetime,
+ngay_thanh_toan datetime,
+tong_tien decimal(18,2),
+so_tien_giam decimal(18,2),
+phi_van_chuyen decimal(18,2),
+loai_hoa_don bit,
+ngay_giao_hang datetime,
+ngay_du_kien_nhan_hang datetime,
+ngay_mong_muon_nhan_hang datetime,
+trang_thai int
+)
+GO
+CREATE TABLE hinh_thuc_thanh_toan(
+id int identity primary key,
+ten_hinh_thuc nvarchar(50),
+trang_thai bit
+)
+GO
+CREATE TABLE httt_hoa_don(
+id int identity primary key,
+id_httt int foreign key references hinh_thuc_thanh_toan(id),
+id_hoa_don int foreign key references hoa_don(id),
+ma_giao_dich nvarchar(50),
+trang_thai bit
+)
+GO
+CREATE TABLE lich_su_hoa_don(
+id int identity primary key,
+id_hoa_don int foreign key references hoa_don(id),
+ma_lshd nvarchar(10),
+hanh_dong_nguoi_thao_tac nvarchar(100),
+ly_do_huy nvarchar(100),
+ngay_cap_nhat datetime,
+ghi_chu nvarchar (100),
+trang_thai bit
+)
+GO
+CREATE TABLE hoa_don_chi_tiet(
+id int identity primary key,
+id_hoa_don int foreign key references hoa_don(id),
+id_ctsp int foreign key references chi_tiet_san_pham(id),
+ma_hdct nvarchar(10),
+so_luong int,
+gia decimal(18,2),
+trang_thai bit
+)
+
+INSERT INTO kich_thuoc (ma_kich_thuoc, size, rong_ao, dai_ao, rong_vai, dai_tay, trang_thai)
+VALUES
+('KT001', 'S', 48.00, 65.00, 40.00, 58.00, 1),
+('KT002', 'M', 50.00, 67.00, 42.00, 60.00, 1),
+('KT003', 'L', 52.00, 70.00, 44.00, 62.00, 1),
+('KT004', 'XL', 55.00, 73.00, 46.00, 64.00, 1),
+('KT005', 'XXL', 58.00, 76.00, 48.00, 66.00, 1),
+('KT006', '3XL', 61.00, 78.00, 50.00, 68.00, 1),
+('KT007', '4XL', 64.00, 80.00, 52.00, 70.00, 1),
+('KT008', '5XL', 67.00, 82.00, 54.00, 72.00, 1),
+('KT009', '6XL', 70.00, 85.00, 56.00, 74.00, 1),
+('KT010', '7XL', 73.00, 88.00, 58.00, 76.00, 1);
+INSERT INTO thuong_hieu (ma_thuong_hieu, ten_thuong_hieu, trang_thai)
+VALUES
+('TH001', 'Nike', 1),
+('TH002', 'Adidas', 1),
+('TH003', 'Puma', 1),
+('TH004', 'Reebok', 1),
+('TH005', 'Under Armour', 1),
+('TH006', 'New Balance', 1),
+('TH007', 'Fila', 1),
+('TH008', 'Converse', 1),
+('TH009', 'Vans', 1),
+('TH010', 'Lacoste', 1);
+INSERT INTO chat_lieu (ma_chat_lieu, ten_chat_lieu, trang_thai)
+VALUES
+('CL001', 'Cotton', 1),
+('CL002', 'Polyester', 1),
+('CL003', 'Jean', 1),
+('CL004', 'Nỉ', 1),
+('CL005', 'Lụa', 1),
+('CL006', 'Len', 1),
+('CL007', 'Viscose', 1),
+('CL008', 'Bamboo', 1),
+('CL009', 'Spandex', 1),
+('CL010', 'Da', 1);
+INSERT INTO mau_sac (ma_mau_sac, ten_mau_sac, trang_thai)
+VALUES
+('M001', N'Đỏ', 1),
+('M002', N'Xanh Dương', 1),
+('M003', N'Xanh Lá', 1),
+('M004', N'Vàng', 1),
+('M005', N'Cam', 1),
+('M006', N'Tím', 1),
+('M007', N'Trắng', 1),
+('M008', N'Đen', 1),
+('M009', N'Hồng', 1),
+('M010', N'Nâu', 1);
+
+INSERT INTO hang (ma_hang, ten_hang, trang_thai)
+VALUES
+('H001', N'Áo Thun', 1),
+('H002', N'Áo Polo', 1),
+('H003', N'Áo Sơ Mi', 1),
+('H004', N'Áo Khoác', 1),
+('H005', N'Áo Hoodie', 1),
+('H006', N'Quần Jean', 1),
+('H007', N'Quần Tây', 1),
+('H008', N'Quần Jogger', 1),
+('H009', N'Quần Short', 1),
+('H010', N'Váy Đầm', 1);
+
+INSERT INTO xuat_xu (ma_xuat_xu, ten_xuat_xu, trang_thai)
+VALUES
+('XX001', N'Việt Nam', 1),
+('XX002', N'Trung Quốc', 1),
+('XX003', N'Thái Lan', 1),
+('XX004', N'Hàn Quốc', 1),
+('XX005', N'Nhật Bản', 1),
+('XX006', N'Mỹ', 1),
+('XX007', N'Anh', 1),
+('XX008', N'Pháp', 1),
+('XX009', N'Đức', 1),
+('XX010', N'Ý', 1);
+
+INSERT INTO co_ao (ma_co_ao, ten_co_ao, trang_thai)
+VALUES
+('CA001', N'Cổ tròn', 1),
+('CA002', N'Cổ tim', 1),
+('CA003', N'Cổ bẻ', 1),
+('CA004', N'Cổ lọ', 1),
+('CA005', N'Cổ chữ V', 1),
+('CA006', N'Cổ vuông', 1),
+('CA007', N'Cổ tàu', 1),
+('CA008', N'Cổ đổ', 1),
+('CA009', N'Cổ ren', 1),
+('CA010', N'Cổ cài nút', 1);
+INSERT INTO tay_ao (ma_tay_ao, ten_tay_ao, trang_thai)
+VALUES
+('TA001', N'Tay ngắn', 1),
+('TA002', N'Tay dài', 1),
+('TA003', N'Tay lỡ', 1),
+('TA004', N'Tay phồng', 1),
+('TA005', N'Tay loe', 1),
+('TA006', N'Tay raglan', 1),
+('TA007', N'Tay cánh dơi', 1),
+('TA008', N'Tay sát nách', 1),
+('TA009', N'Tay bèo', 1),
+('TA010', N'Tay viền ren', 1);
+
+INSERT INTO nha_san_xuat (ma_nsx, ten_nsx, dia_chi, trang_thai)
+VALUES
+('NSX001', N'Công ty May Việt Tiến', N'TP. Hồ Chí Minh', 1),
+('NSX002', N'Công ty May Nhà Bè', N'TP. Hồ Chí Minh', 1),
+('NSX003', N'Tổng Công ty May 10', N'Hà Nội', 1),
+('NSX004', N'Công ty May An Phước', N'TP. Hồ Chí Minh', 1),
+('NSX005', N'Công ty May Đức Giang', N'Hà Nội', 1),
+('NSX006', N'Xí nghiệp Dệt Kim Đông Xuân', N'Hà Nội', 1),
+('NSX007', N'Công ty May Bình Minh', 'Bình Dương', 1),
+('NSX008', N'Công ty Dệt May Hòa Thọ', 'Đà Nẵng', 1),
+('NSX009', N'Công ty TNHH Dệt Kim Đông Phương', 'Bình Dương', 1),
+('NSX010', N'Công ty TNHH May Quốc Tế', 'Hải Phòng', 1);
+INSERT INTO khuy_ao (ma_khuy_ao, ten_khuy_ao, trang_thai)
+VALUES
+('KA001', N'Khuy bấm', 1),
+('KA002', N'Khuy cài', 1),
+('KA003', N'Khuy bọc vải', 1),
+('KA004', N'Khuy kim loại', 1),
+('KA005', N'Khuy nhựa', 1),
+('KA006', N'Khuy ngọc trai', 1),
+('KA007', N'Khuy gỗ', 1),
+('KA008', N'Khuy xỏ dây', 1),
+('KA009', N'Khuy hít nam châm', 1),
+('KA010', N'Khuy cài móc', 1);
+INSERT INTO hinh_anh (ma_anh, ten_anh, trang_thai)
+VALUES
+('HA001', 'ao_thun_trang.jpg', 1),
+('HA002', 'ao_thun_den.jpg', 1),
+('HA003', 'ao_polo_xanh.jpg', 1),
+('HA004', 'ao_khoac_xam.jpg', 1),
+('HA005', 'ao_hoodie_do.jpg', 1),
+('HA006', 'quan_jean_xanh.jpg', 1),
+('HA007', 'quan_tay_den.jpg', 1),
+('HA008', 'quan_jogger_xam.jpg', 1),
+('HA009', 'quan_short_be.jpg', 1),
+('HA010', 'vay_dam_hong.jpg', 1);
+INSERT INTO danh_muc (ma_danh_muc, ten_danh_muc, mo_ta, trang_thai)
+VALUES
+('DM001', N'Áo Thun', N'Các loại áo thun nam nữ', 1),
+('DM002', N'Áo Polo', N'Các mẫu áo polo thời trang', 1),
+('DM003', N'Áo Sơ Mi', N'Áo sơ mi công sở, dạo phố', 1),
+('DM004', N'Áo Khoác', N'Các loại áo khoác chống nắng, gió', 1),
+('DM005', N'Áo Hoodie', N'Áo hoodie phong cách trẻ trung', 1),
+('DM006', N'Quần Jean', N'Các loại quần jean nam nữ', 1),
+('DM007', N'Quần Tây', N'Quần tây công sở, lịch sự', 1),
+('DM008', N'Quần Jogger', N'Quần jogger thể thao, năng động', 1),
+('DM009', N'Quần Short', N'Quần short nam nữ thoải mái', 1),
+('DM010', N'Váy Đầm', N'Các mẫu váy đầm sang trọng', 1);
+
+INSERT INTO san_pham (ma_sp, ten_sp, so_luong, mo_ta, trang_thai)
+VALUES
+('SP001', N'Áo Thun Trắng', 100, N'Áo thun trắng basic, thoáng mát', 1),
+('SP002', N'Áo Polo Xanh', 80, N'Áo polo xanh lịch lãm, năng động', 1),
+('SP003', N'Áo Sơ Mi Kẻ', 70, N'Áo sơ mi họa tiết kẻ sọc thời trang', 1),
+('SP004', N'Áo Khoác Gió', 50, N'Áo khoác gió chống nắng, chống nước', 1),
+('SP005', N'Áo Hoodie Đỏ', 60, N'Áo hoodie đỏ trẻ trung, cá tính', 1),
+('SP006', N'Quần Jean Xanh', 90, N'Quần jean xanh form slim fit', 1),
+('SP007', N'Quần Tây Đen', 40, N'Quần tây đen lịch sự, sang trọng', 1),
+('SP008', N'Quần Jogger Xám', 75, N'Quần jogger xám thể thao', 1),
+('SP009', N'Quần Short Be', 85, N'Quần short be thoáng mát mùa hè', 1),
+('SP010', N'Váy Đầm Hồng', 45, N'Váy đầm hồng nữ tính, dễ thương', 1);
+INSERT INTO chi_tiet_san_pham (id_hang, id_san_pham, id_chat_lieu, id_kich_thuoc, id_mau_sac, id_thuong_hieu, id_xuat_xu, id_nha_san_xuat, id_khuy_ao, id_co_ao, id_tay_ao, id_hinh_anh, ma_chi_tiet_sp, ten_chi_tiet_sp, so_luong, don_gia, ghi_chu, trang_thai)
+VALUES
+(1, 1, 1, 2, 3, 1, 1, 2, 1, 2, 1, 1, 'CTSP001', N'Áo sơ mi trắng', 50, 350000, N'Chất liệu cotton', 1),
+(2, 2, 2, 3, 1, 2, 2, 3, 2, 1, 2, 2, 'CTSP002', N'Áo polo đen', 30, 400000, N'Mềm mịn, thoáng khí', 1),
+(3, 3, 3, 1, 2, 3, 3, 1, 1, 3, 3, 3, 'CTSP003', N'Áo hoodie xanh', 40, 600000, N'Form rộng, trẻ trung', 1),
+(1, 4, 4, 2, 4, 1, 1, 2, 2, 1, 1, 4, 'CTSP004', N'Áo thun cổ tròn', 60, 250000, N'Mặc thoải mái', 1),
+(2, 5, 1, 3, 3, 2, 2, 3, 1, 2, 2, 5, 'CTSP005', N'Áo khoác bomber', 25, 750000, N'Phong cách đường phố', 1),
+(3, 6, 2, 1, 1, 3, 3, 1, 2, 3, 3, 6, 'CTSP006', N'Áo sơ mi kẻ sọc', 35, 370000, N'Phong cách lịch lãm', 1),
+(1, 7, 3, 2, 2, 1, 1, 2, 1, 1, 1, 7, 'CTSP007', N'Áo vest công sở', 20, 1500000, N'Lịch sự, sang trọng', 1),
+(2, 8, 4, 3, 3, 2, 2, 3, 2, 2, 2, 8, 'CTSP008', N'Áo len cổ lọ', 45, 500000, N'Giữ ấm tốt', 1),
+(3, 9, 1, 1, 4, 3, 3, 1, 1, 3, 3, 9, 'CTSP009', N'Áo blazer xanh', 15, 1200000, N'Phối đồ đa dạng', 1),
+(1, 10, 2, 2, 1, 1, 1, 2, 2, 1, 1, 10, 'CTSP010', N'Áo dài truyền thống', 10, 1800000, N'Thêu hoa tinh xảo', 1);
+
+
+INSERT INTO dot_giam_gia (ma_dot_giam_gia, ten_dot_giam_gia, ngay_bat_dau, ngay_ket_thuc, gia_tri, trang_thai)
+VALUES
+('DG001', N'Giảm giá tháng 1', '2025-01-01', '2025-01-10', 10, 1),
+('DG002', N'Khuyến mãi Tết', '2025-02-01', '2025-02-15', 15, 1),
+('DG003', N'Flash Sale 8/3', '2025-03-08', '2025-03-08', 20, 1),
+('DG004', N'Giảm giá tháng 4', '2025-04-05', '2025-04-20', 12, 1),
+('DG005', N'Đại lễ 30/4', '2025-04-25', '2025-05-01', 25, 1),
+('DG006', N'Mùa hè sôi động', '2025-06-01', '2025-06-10', 18, 1),
+('DG007', N'Back to School', '2025-08-15', '2025-08-31', 15, 1),
+('DG008', N'Giảm giá tháng 9', '2025-09-10', '2025-09-20', 10, 1),
+('DG009', N'11/11 Siêu sale', '2025-11-11', '2025-11-11', 50, 1),
+('DG010', N'Giáng sinh an lành', '2025-12-20', '2025-12-31', 30, 1);
+
+INSERT INTO dot_giam_gia_ctsp (id_spct, id_dot_giam_gia, so_tien_giam, trang_thai)
+VALUES
+(1, 1, 50000, 1),  -- Giảm 50,000đ cho Áo Thun Trắng trong đợt Giảm giá Tết
+(2, 1, 50000, 1),
+(3, 2, 30000, 1),  -- Giảm 30,000đ cho Áo Polo Xanh dịp Valentine
+(4, 3, 45000, 1),  -- Giảm 45,000đ cho Áo Sơ Mi Kẻ trong Flash Sale 8/3
+(5, 4, 40000, 1),
+(6, 5, 60000, 1),  -- Giảm 60,000đ cho Quần Jean Xanh vào 30/4 - 1/5
+(7, 6, 25000, 1),
+(8, 7, 35000, 1),
+(9, 8, 70000, 1),  -- Flash Sale 11/11 giảm mạnh
+(10, 9, 80000, 1);  -- Black Friday giảm sốc
+INSERT INTO gio_hang (id_spct, so_luong, trang_thai)
+VALUES
+(1, 2, 1),  -- 2 cái Áo Thun Trắng trong giỏ hàng
+(2, 1, 1),  -- 1 cái Áo Thun Trắng size L
+(3, 3, 1),  -- 3 cái Áo Polo Xanh
+(4, 1, 1),  -- 1 cái Áo Sơ Mi Kẻ
+(5, 2, 1),  -- 2 cái Áo Khoác Gió
+(6, 4, 1),  -- 4 cái Áo Hoodie Đỏ
+(7, 1, 1),  -- 1 cái Quần Jean Xanh
+(8, 2, 1),  -- 2 cái Quần Tây Đen
+(9, 3, 1),  -- 3 cái Quần Jogger Xám
+(10, 1, 1); -- 1 cái Quần Short Be
+INSERT INTO khach_hang (ma_khach_hang, ho_ten, gioi_tinh, sdt, cccd, dia_chi, email, hinh_anh, ngay_sinh, trang_thai)
+VALUES
+('KH001', N'Nguyễn Văn A', 1, '0987654321', '123456789012', N'Hà Nội', 'nguyenvana@email.com', 'avatar_a.jpg', '1995-05-10', 1),
+('KH002', N'Trần Thị B', 0, '0976543210', '234567890123', N'Hồ Chí Minh', 'tranthib@email.com', 'avatar_b.jpg', '1998-08-20', 1),
+('KH003', N'Phạm Văn C', 1, '0965432109', '345678901234', N'Đà Nẵng', 'phamvanc@email.com', 'avatar_c.jpg', '1992-12-15', 1),
+('KH004', N'Lê Thị D', 0, '0954321098', '456789012345', N'Cần Thơ', 'lethid@email.com', 'avatar_d.jpg', '2000-06-05', 1),
+('KH005', N'Hoàng Minh E', 1, '0943210987', '567890123456', N'Hải Phòng', 'hoangminhe@email.com', 'avatar_e.jpg', '1996-04-18', 1),
+('KH006', N'Đặng Thị F', 0, '0932109876', '678901234567', N'Bình Dương', 'dangthif@email.com', 'avatar_f.jpg', '1993-09-22', 0),
+('KH007', N'Vũ Văn G', 1, '0921098765', '789012345678', N'Nghệ An', 'vuvang@email.com', 'avatar_g.jpg', '1989-11-30', 1),
+('KH008', N'Ngô Thị H', 0, '0910987654', '890123456789', N'Quảng Ninh', 'ngothih@email.com', 'avatar_h.jpg', '1997-02-14', 1),
+('KH009', N'Bùi Quang I', 1, '0909876543', '901234567890', N'Thừa Thiên Huế', 'buiquangi@email.com', 'avatar_i.jpg', '1991-07-07', 1),
+('KH010', N'Đỗ Thị J', 0, '0898765432', '012345678901', N'Bắc Ninh', 'dothij@email.com', 'avatar_j.jpg', '1994-03-25', 0);
+INSERT INTO dia_chi (id_khach_hang, ma_dia_chi, thanh_pho, quan_huyen, xa_phuong, so_nha, dia_chi_chi_tiet, trang_thai)
+VALUES
+(1, N'DC001', N'Hà Nội', N'Ba Đình', N'Điện Biên', N'12A', N'12A Điện Biên Phủ, Ba Đình, Hà Nội', 1),
+(2, N'DC002', N'TP. Hồ Chí Minh', N'Quận 1', N'Bến Nghé', N'25B', N'25B Lê Lợi, Quận 1, TP. Hồ Chí Minh', 1),
+(3, N'DC003', N'Đà Nẵng', N'Hải Châu', N'Hòa Thuận Tây', N'8C', N'8C Nguyễn Văn Linh, Hải Châu, Đà Nẵng', 1),
+(4, N'DC004', N'Cần Thơ', N'Ninh Kiều', N'An Bình', N'17D', N'17D Trần Văn Hoài, Ninh Kiều, Cần Thơ', 1),
+(5, N'DC005', N'Hải Phòng', N'Lê Chân', N'Vĩnh Niệm', N'3E', N'3E Nguyễn Đức Cảnh, Lê Chân, Hải Phòng', 1),
+(6, N'DC006', N'Huế', N'TP. Huế', N'Phước Vĩnh', N'56F', N'56F Lê Lợi, TP. Huế', 1),
+(7, N'DC007', N'Bình Dương', N'Thủ Dầu Một', N'Phú Cường', N'19G', N'19G Nguyễn Trãi, Thủ Dầu Một, Bình Dương', 1),
+(8, N'DC008', N'Nha Trang', N'Nha Trang', N'Phước Hòa', N'45H', N'45H Trần Phú, Nha Trang', 1),
+(9, N'DC009', N'Quảng Ninh', N'Hạ Long', N'Bạch Đằng', N'23K', N'23K Hạ Long, Bạch Đằng, Quảng Ninh', 1),
+(10, N'DC010', N'Đồng Nai', N'Biên Hòa', N'Tam Hiệp', N'99M', N'99M Đồng Khởi, Biên Hòa, Đồng Nai', 1);
+
+INSERT INTO danh_gia (id_khach_hang, id_spct, so_sao, binh_luan, ngay_danh_gia, trang_thai)
+VALUES
+(1, 1, 5.0, N'Áo đẹp, chất lượng tốt, giao hàng nhanh!', N'2025-03-10 10:30:00', 1),
+(2, 2, 4.5, N'Chất vải mềm, mặc thoải mái.', N'2025-03-11 15:45:00', 1),
+(3, 3, 4.0, N'Sản phẩm ổn, nhưng giao hàng hơi chậm.', N'2025-03-12 09:20:00', 1),
+(4, 4, 5.0, N'Mua lần thứ 2 rồi, rất ưng ý.', N'2025-03-13 12:10:00', 1),
+(5, 5, 3.5, N'Vải đẹp nhưng đường may chưa thực sự chắc chắn.', N'2025-03-14 18:00:00', 1),
+(6, 6, 4.0, N'Form áo đẹp, đúng size, sẽ mua lại.', N'2025-03-15 14:25:00', 1),
+(7, 7, 4.8, N'Màu áo chuẩn, không bị phai khi giặt.', N'2025-03-16 08:55:00', 1),
+(8, 8, 5.0, N'Gói hàng cẩn thận, giao nhanh, chất lượng tốt.', N'2025-03-17 19:30:00', 1),
+(9, 9, 3.0, N'Áo hơi rộng so với mô tả, nhưng chất lượng ok.', N'2025-03-18 11:40:00', 1),
+(10, 10, 4.2, N'Sản phẩm khá tốt, sẽ tiếp tục ủng hộ.', N'2025-03-19 16:50:00', 1);
+
+INSERT INTO phieu_giam_gia (
+    ma_phieu_giam_gia, ten_phieu_giam_gia, so_luong, ngay_bat_dau, ngay_ket_thuc,
+    dieu_kien, loai, kieu, gia_tri_toi_thieu, gia_tri_toi_da, trang_thai
+) VALUES
+('GG01', N'Giảm 10%', 100, '2025-04-01', '2025-04-30', 11111, 1, 0, 10, 50, 1),
+('GG02', N'Giảm 20K', 50, '2025-04-01', '2025-04-15', 1111111, 0, 0, 20000, 20000, 1),
+('GG03', N'Giảm 5%', 200, '2025-05-01', '2025-05-31', 111111111, 1, 0, 5, 30, 1),
+('GG04', N'Giảm 50K', 30, '2025-04-10', '2025-04-20', 11111111, 0, 0, 50000, 50000, 1),
+('GG05', N'Giảm 15%', 80, '2025-06-01', '2025-06-30', 111111, 1, 0, 15, 100, 1),
+('GG06', N'Giảm 30K', 120, '2025-07-01', '2025-07-15', 1111111, 0, 0, 30000, 30000, 1),
+('GG07', N'Miễn phí vận chuyển', 200, '2025-08-01', '2025-08-31', 1111111, 2, 0, 0, 30000, 1),
+('GG08', N'Tặng quà 100K', 40, '2025-09-01', '2025-09-15', 1111111, 3, 0, 100000, 100000, 1),
+('GG09', N'Giảm 12%', 90, '2025-10-01', '2025-10-31', 1111111, 1, 0, 12, 150, 1),
+('GG10', N'Giảm 70K', 70, '2025-11-01', '2025-11-30', 1111111, 0, 0, 70000, 70000, 1);
+
+INSERT INTO khach_hang_gg (id_khach_hang, id_phieu_giam_gia, so_tien_giam, trang_thai)
+VALUES
+(1, 1, 50000, 1),
+(2, 2, 50000, 1),
+(3, 3, 100000, 1),
+(4, 4, 200000, 1),
+(5, 5, 500000, 1),
+(6, 6, 100000, 1),
+(7, 7, 50000, 1),
+(8, 8, 30000, 1),
+(9, 9, 300000, 1),
+(10, 10, 200000, 1);
+
+INSERT INTO chuc_vu (ma_chuc_vu, ten_chuc_vu, trang_thai)
+VALUES
+(N'CV001', N'Quản lý', 1),
+(N'CV002', N'Nhân viên bán hàng', 1),
+(N'CV003', N'Nhân viên kho', 1),
+(N'CV004', N'Nhân viên chăm sóc khách hàng', 1),
+(N'CV005', N'Nhân viên kế toán', 1),
+(N'CV006', N'Nhân viên marketing', 1),
+(N'CV007', N'Nhân viên giao hàng', 1),
+(N'CV008', N'Nhân viên kỹ thuật', 1),
+(N'CV009', N'Nhân viên IT', 1),
+(N'CV010', N'Nhân viên bảo vệ', 1);
+
+INSERT INTO nhan_vien (id_chuc_vu, ma_nhan_vien, ho_ten, gioi_tinh, ngay_sinh, email, cccd, sdt, mat_khau, luong, dia_chi, hinh_anh, trang_thai)
+VALUES
+(1, 'NV001', N'Nguyễn Văn An', 1, '1990-01-15', 'an.nguyen@email.com', '123456789012', '0987654321', '123456', 15000000, N'Hà Nội', 'an.jpg', 1),
+(2, 'NV002', N'Trần Thị Bình', 0, '1992-03-20', 'binh.tran@email.com', '234567890123', '0976543210', '654321', 12000000, N'Hồ Chí Minh', 'binh.jpg', 1),
+(1, 'NV003', N'Phạm Văn Cường', 1, '1988-07-10', 'cuong.pham@email.com', '345678901234', '0965432109', 'cuong123', 18000000, N'Đà Nẵng', 'cuong.jpg', 1),
+(3, 'NV004', N'Lê Thị Dung', 0, '1995-05-05', 'dung.le@email.com', '456789012345', '0954321098', 'dungpass', 10000000, N'Cần Thơ', 'dung.jpg', 1),
+(2, 'NV005', N'Hoàng Minh Đức', 1, '1993-04-18', 'duc.hoang@email.com', '567890123456', '0943210987', 'duc321', 14000000, N'Hải Phòng', 'duc.jpg', 1),
+(3, 'NV006', N'Đặng Thị Hương', 0, '1996-09-22', 'huong.dang@email.com', '678901234567', '0932109876', 'huong789', 9000000, N'Bình Dương', 'huong.jpg', 0),
+(1, 'NV007', N'Vũ Văn Hải', 1, '1987-11-30', 'hai.vu@email.com', '789012345678', '0921098765', 'hai999', 20000000, N'Nghệ An', 'hai.jpg', 1),
+(2, 'NV008', N'Ngô Thị Mai', 0, '1994-02-14', 'mai.ngo@email.com', '890123456789', '0910987654', 'mai555', 12500000, N'Quảng Ninh', 'mai.jpg', 1),
+(3, 'NV009', N'Bùi Quang Nam', 1, '1991-07-07', 'nam.bui@email.com', '901234567890', '0909876543', 'nam888', 11000000, N'Thừa Thiên Huế', 'nam.jpg', 1),
+(1, 'NV010', N'Đỗ Thị Oanh', 0, '1998-03-25', 'oanh.do@email.com', '012345678901', '0898765432', 'oanh222', 17000000, N'Bắc Ninh', 'oanh.jpg', 0);
+
+INSERT INTO hoa_don (id_khach_hang, id_nhan_vien, id_phieu_giam_gia, ma_hoa_don, ngay_tao, ngay_thanh_toan, tong_tien, so_tien_giam, phi_van_chuyen, loai_hoa_don, ngay_giao_hang, ngay_du_kien_nhan_hang, ngay_mong_muon_nhan_hang, trang_thai)
+VALUES
+(1, 2, 3, 'HD001', '2025-03-01', '2025-03-02', 1500000, 200000, 30000, 1, '2025-03-05', '2025-03-06', '2025-03-07', 3),
+(2, 1, NULL, 'HD002', '2025-03-02', NULL, 500000, 0, 20000, 0, NULL, NULL, NULL, 0),
+(3, 2, 1, 'HD003', '2025-03-03', '2025-03-04', 1200000, 150000, 25000, 1, '2025-03-08', '2025-03-09', '2025-03-09', 2),
+(4, 3, NULL, 'HD004', '2025-03-04', '2025-03-05', 2500000, 300000, 50000, 1, '2025-03-09', '2025-03-10', '2025-03-11', 3),
+(5, 1, 2, 'HD005', '2025-03-05', NULL, 800000, 100000, 20000, 0, NULL, NULL, NULL, 0),
+(6, 4, 4, 'HD006', '2025-03-06', '2025-03-07', 600000, 50000, 15000, 1, '2025-03-11', '2025-03-12', '2025-03-12', 1),
+(7, 2, NULL, 'HD007', '2025-03-07', NULL, 3000000, 500000, 70000, 1, NULL, NULL, NULL, 0),
+(8, 3, 5, 'HD008', '2025-03-08', '2025-03-09', 1700000, 250000, 35000, 0, '2025-03-13', '2025-03-14', '2025-03-14', 3),
+(9, 4, NULL, 'HD009', '2025-03-09', NULL, 900000, 100000, 20000, 1, NULL, NULL, NULL, 0),
+(10, 1, 3, 'HD010', '2025-03-10', '2025-03-11', 2200000, 300000, 50000, 1, '2025-03-15', '2025-03-16', '2025-03-16', 2);
+
+INSERT INTO hinh_thuc_thanh_toan (ten_hinh_thuc, trang_thai)
+VALUES
+(N'Tiền mặt', 1),
+(N'Chuyển khoản ngân hàng', 1),
+(N'Ví điện tử Momo', 1),
+(N'Thẻ tín dụng/ghi nợ', 1),
+(N'Thanh toán khi nhận hàng (COD)', 1);
+
+INSERT INTO httt_hoa_don (id_httt, id_hoa_don, ma_giao_dich, trang_thai)
+VALUES
+(1, 1, N'GD001', 1),
+(2, 2, N'GD002', 1),
+(3, 3, N'GD003', 1),
+(4, 4, N'GD004', 1),
+(5, 5, NULL, 0);
+
+INSERT INTO lich_su_hoa_don (id_hoa_don, ma_lshd, hanh_dong_nguoi_thao_tac, ly_do_huy, ngay_cap_nhat, ghi_chu, trang_thai)
+VALUES
+(1, N'LSHD001', N'Tạo đơn hàng', NULL, '2025-03-15 10:00:00', N'Khách đặt hàng online', 1),
+(2, N'LSHD002', N'Xác nhận đơn hàng', NULL, '2025-03-15 11:00:00', N'Nhân viên xác nhận', 1),
+(3, N'LSHD003', N'Giao hàng', NULL, '2025-03-15 12:30:00', N'Đơn vị vận chuyển nhận hàng', 1),
+(4, N'LSHD004', N'Hủy đơn', N'Khách đổi ý', '2025-03-15 13:00:00', N'Khách yêu cầu hủy', 0),
+(5, N'LSHD005', N'Hoàn thành đơn hàng', NULL, '2025-03-15 15:00:00', N'Khách đã nhận hàng', 1);
+
+INSERT INTO hoa_don_chi_tiet (id_hoa_don, id_ctsp, ma_hdct, so_luong, gia, trang_thai)
+VALUES
+(1, 1, 'HDCT001', 2, 250000.00, 1),
+(1, 2, 'HDCT002', 1, 150000.00, 1),
+(2, 3, 'HDCT003', 3, 300000.00, 1),
+(3, 4, 'HDCT004', 1, 500000.00, 1),
+(4, 5, 'HDCT005', 2, 200000.00, 0);
