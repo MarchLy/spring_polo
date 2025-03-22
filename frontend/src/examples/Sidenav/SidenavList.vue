@@ -5,6 +5,10 @@ import { useStore } from "vuex";
 
 import SidenavItem from "./SidenavItem.vue";
 import SidenavCard from "./SidenavCard.vue";
+// import PaymentCard from "./components/PaymentCard.vue";
+// import InvoiceCard from "./components/InvoiceCard.vue";
+// import BillingCard from "./components/BillingCard.vue";
+// import TransactionCard from "./components/TransactionCard.vue";
 
 const store = useStore();
 const isRTL = computed(() => store.state.isRTL);
@@ -47,12 +51,15 @@ const toggleMenu = (menuName) => {
       <!-- Product -->
       <li class="nav-item">
         <sidenav-item
-            to="/product"
+            to="/"
             :navText="isRTL ? 'Product' : 'Sản phẩm'"
             @click="toggleMenu('product')"
         >
           <template v-slot:icon>
             <i class="ni ni-bag-17 text-warning text-sm opacity-10"></i>
+          </template>
+          <template v-slot:extra >
+            <i :class="openMenus['product'] ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" class="ms-auto"></i>
           </template>
         </sidenav-item>
         <ul v-if="openMenus['product']" class="navbar-nav">
@@ -105,12 +112,15 @@ const toggleMenu = (menuName) => {
       <!-- Voucher -->
       <li class="nav-item">
         <sidenav-item
-            to="/voucher"
+            to="/"
             :navText="isRTL ? 'Voucher' : 'Quản lý giảm giá'"
             @click="toggleMenu('voucher')"
         >
           <template v-slot:icon>
             <i class="ni ni-tag text-info text-sm opacity-10"></i>
+          </template>
+          <template v-slot:extra>
+            <i :class="openMenus['voucher'] ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" class="ms-auto"></i>
           </template>
         </sidenav-item>
         <ul v-if="openMenus['voucher']" class="navbar-nav">
@@ -133,12 +143,15 @@ const toggleMenu = (menuName) => {
       <!-- Profile -->
       <li class="nav-item">
         <sidenav-item
-            to="/profile"
+            to="/"
             :navText="isRTL ? 'Profile' : 'Hồ sơ'"
             @click="toggleMenu('profile')"
         >
           <template v-slot:icon>
             <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+          </template>
+          <template v-slot:extra>
+            <i :class="openMenus['profile'] ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" class="ms-auto"></i>
           </template>
         </sidenav-item>
         <ul v-if="openMenus['profile']" class="navbar-nav">
@@ -210,5 +223,8 @@ const toggleMenu = (menuName) => {
 
 .sidenav-footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.nav-item i {
+  transition: transform 0.3s ease;
 }
 </style>

@@ -1,4 +1,3 @@
-
 import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import Tables from "../views/Tables.vue";
@@ -8,6 +7,7 @@ import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
 import Product from "../views/Product.vue";
 import Voucher from "../views/Voucher.vue";
+import InvoiceDetail from "../views/bills/InvoiceDetail.vue"; // Import component chi tiết hóa đơn
 
 const routes = [
   {
@@ -56,11 +56,6 @@ const routes = [
     name: "Billing",
     component: Billing,
   },
-  // {
-  //   path: "/profile",
-  //   name: "Profile",
-  //   component: Profile,
-  // },
   {
     path: "/profile",
     name: "Profile",
@@ -70,7 +65,6 @@ const routes = [
       { path: "client", name: "Client", component: () => import("../views/profile/Client.vue") },
     ],
   },
-
   {
     path: "/signin",
     name: "Signin",
@@ -81,6 +75,12 @@ const routes = [
     name: "Signup",
     component: Signup,
   },
+  // Thêm route cho chi tiết hóa đơn
+  {
+    path: "/hoa-don/detail/:id", // Sử dụng dynamic route với tham số `id`
+    name: "InvoiceDetail",
+    component: InvoiceDetail, // Component để hiển thị chi tiết hóa đơn
+  },
 ];
 
 const router = createRouter({
@@ -90,86 +90,3 @@ const router = createRouter({
 });
 
 export default router;
-
-
-
-
-
-// import { createRouter, createWebHistory } from "vue-router";
-// import Dashboard from "../views/Dashboard.vue";
-// import Tables from "../views/Tables.vue";
-// import Billing from "../views/Billing.vue";
-// // import VirtualReality from "../views/VirtualReality.vue";
-// import RTL from "../views/Rtl.vue";
-// import Profile from "../views/Profile.vue";
-// import Signup from "../views/Signup.vue";
-// import Signin from "../views/Signin.vue";
-// import Voucher from "@/views/Voucher.vue";
-//
-// import Product from "../views/Product.vue";
-//
-// const routes = [
-//   {
-//     path: "/",
-//     name: "/",
-//     redirect: "/dashboard-default",
-//   },
-//   {
-//     path: "/dashboard-default",
-//     name: "Dashboard",
-//     component: Dashboard,
-//   },
-//   {
-//     path: "/product",
-//     name: "Product",
-//     component: Product,
-//   },
-//   {
-//     path: "/tables",
-//     name: "Tables",
-//     component: Tables,
-//   },
-//   {
-//     path: "/billing",
-//     name: "Billing",
-//     component: Billing,
-//   },
-//   {
-//     path: "/voucher",
-//     name: "Voucher",
-//     component: Voucher,
-//   },
-//   // {
-//   //   path: "/virtual-reality",
-//   //   name: "Virtual Reality",
-//   //   component: VirtualReality,
-//   // },
-//   {
-//     path: "/rtl-page",
-//     name: "RTL",
-//     component: RTL,
-//   },
-//   {
-//     path: "/profile",
-//     name: "Profile",
-//     component: Profile,
-//   },
-//   {
-//     path: "/signin",
-//     name: "Signin",
-//     component: Signin,
-//   },
-//   {
-//     path: "/signup",
-//     name: "Signup",
-//     component: Signup,
-//   },
-// ];
-//
-// const router = createRouter({
-//   history: createWebHistory(process.env.BASE_URL),
-//   routes,
-//   linkActiveClass: "active",
-// });
-//
-// export default router;

@@ -28,10 +28,6 @@ public class HoaDonServiceImpl implements HoaDonService {
             }
         }
 
-//        log.info("maHoaDon: {}, trangThai: {}, fromDate: {}, toDate: {}", maHoaDon, trangThai, fromDate, toDate);
-
-//        return hoaDonRepo.searchHoaDon(maHoaDon, trangThaiInt, fromDate, toDate, pageable);
-
         return hoaDonRepo.searchHoaDon(maHoaDon != null ? maHoaDon : "", trangThaiInt, fromDate, toDate, pageable);
 
     }
