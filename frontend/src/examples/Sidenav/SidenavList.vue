@@ -50,48 +50,45 @@ const toggleMenu = (menuName) => {
 
       <!-- Product -->
       <li class="nav-item">
-        <sidenav-item
-            to="/"
-            :navText="isRTL ? 'Product' : 'Sản phẩm'"
-            @click="toggleMenu('product')"
-        >
-          <template v-slot:icon>
-            <i class="ni ni-bag-17 text-warning text-sm opacity-10"></i>
-          </template>
-          <template v-slot:extra >
-            <i :class="openMenus['product'] ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" class="ms-auto"></i>
-          </template>
-        </sidenav-item>
+        <div class="d-flex justify-content-between align-items-center nav-link ms-3"
+             @click="toggleMenu('product')"
+             style="cursor: pointer;">
+    <span>
+      <i class="ni ni-bag-17 text-warning text-sm opacity-10"></i>
+      Quản Lý Sản Phẩm
+    </span>
+          <i class="ni text-sm" :class="openMenus['product'] ? 'ni-bold-down' : 'ni-bold-right'"></i>
+        </div>
         <ul v-if="openMenus['product']" class="navbar-nav">
           <li class="nav-item">
-            <sidenav-item to="/product/keyboards" navText="Keyboards" />
+            <sidenav-item to="/product/san-pham/hien-thi" navText="Sản Phẩm"/>
           </li>
           <li class="nav-item">
-            <sidenav-item to="/product/mice" navText="Mice" />
+            <sidenav-item to="/product/mice" navText="Danh Mục"/>
           </li>
           <li class="nav-item">
-            <sidenav-item to="/product/headsets" navText="Headsets" />
+            <sidenav-item to="/product/headsets" navText="Màu Sắc"/>
           </li>
           <li class="nav-item">
-            <sidenav-item to="/product/keycaps" navText="Keycaps" />
+            <sidenav-item to="/product/keycaps" navText="Kích Cỡ"/>
           </li>
           <li class="nav-item">
-            <sidenav-item to="/product/cases" navText="Cases" />
+            <sidenav-item to="/product/cases" navText="Thương Hiệu"/>
           </li>
           <li class="nav-item">
-            <sidenav-item to="/product/laptop-stands" navText="Laptop Stands" />
+            <sidenav-item to="/product/laptop-stands" navText="Chất Liệu"/>
           </li>
           <li class="nav-item">
-            <sidenav-item to="/product/speakers" navText="Speakers" />
+            <sidenav-item to="/product/speakers" navText="Kiểu Tay Áo"/>
           </li>
           <li class="nav-item">
-            <sidenav-item to="/product/mousepads" navText="Mousepads" />
+            <sidenav-item to="/product/mousepads" navText="Kiểu Cổ Áo"/>
           </li>
           <li class="nav-item">
-            <sidenav-item to="/product/cables" navText="Cables" />
+            <sidenav-item to="/product/cables" navText="Nhà Sản Xuất"/>
           </li>
           <li class="nav-item">
-            <sidenav-item to="/product/accessories" navText="Accessories" />
+            <sidenav-item to="/product/accessories" navText="Khuy Áo"/>
           </li>
         </ul>
       </li>
@@ -111,24 +108,21 @@ const toggleMenu = (menuName) => {
 
       <!-- Voucher -->
       <li class="nav-item">
-        <sidenav-item
-            to="/"
-            :navText="isRTL ? 'Voucher' : 'Quản lý giảm giá'"
-            @click="toggleMenu('voucher')"
-        >
-          <template v-slot:icon>
-            <i class="ni ni-tag text-info text-sm opacity-10"></i>
-          </template>
-          <template v-slot:extra>
-            <i :class="openMenus['voucher'] ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" class="ms-auto"></i>
-          </template>
-        </sidenav-item>
+        <div class="d-flex justify-content-between align-items-center nav-link ms-3"
+             @click="toggleMenu('voucher')"
+             style="cursor: pointer;">
+    <span>
+      <i class="ni ni-tag text-info text-sm opacity-10"></i>
+       Quản Lý Giảm Giá
+    </span>
+          <i class="ni text-sm" :class="openMenus['voucher'] ? 'ni-bold-down' : 'ni-bold-right'"></i>
+        </div>
         <ul v-if="openMenus['voucher']" class="navbar-nav">
           <li class="nav-item">
-            <sidenav-item to="/voucher/discount" navText="Discount" />
+            <sidenav-item to="/voucher/discount" navText="Discount"/>
           </li>
           <li class="nav-item">
-            <sidenav-item to="/voucher/gift" navText="Gift" />
+            <sidenav-item to="/voucher/gift" navText="Gift"/>
           </li>
         </ul>
       </li>
@@ -142,24 +136,21 @@ const toggleMenu = (menuName) => {
 
       <!-- Profile -->
       <li class="nav-item">
-        <sidenav-item
-            to="/"
-            :navText="isRTL ? 'Profile' : 'Hồ sơ'"
-            @click="toggleMenu('profile')"
-        >
-          <template v-slot:icon>
-            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-          </template>
-          <template v-slot:extra>
-            <i :class="openMenus['profile'] ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" class="ms-auto"></i>
-          </template>
-        </sidenav-item>
+        <div class="d-flex justify-content-between align-items-center nav-link ms-3"
+             @click="toggleMenu('profile')"
+             style="cursor: pointer;">
+    <span>
+      <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+      Hồ Sơ
+    </span>
+          <i class="ni text-sm" :class="openMenus['profile'] ? 'ni-bold-down' : 'ni-bold-right'"></i>
+        </div>
         <ul v-if="openMenus['profile']" class="navbar-nav">
           <li class="nav-item">
-            <sidenav-item to="/profile/staff" navText="Staff" />
+            <sidenav-item to="/profile/staff" navText="Staff"/>
           </li>
           <li class="nav-item">
-            <sidenav-item to="/profile/client" navText="Client" />
+            <sidenav-item to="/profile/client" navText="Client"/>
           </li>
         </ul>
       </li>
@@ -227,4 +218,16 @@ const toggleMenu = (menuName) => {
 .nav-item i {
   transition: transform 0.3s ease;
 }
+
+.nav-item span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Điều chỉnh khoảng cách giữa icon và text */
+}
+
+.nav-item i:first-child {
+  width: 20px; /* Đảm bảo icon có kích thước cố định */
+  text-align: center;
+}
+
 </style>

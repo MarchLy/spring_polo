@@ -5,7 +5,8 @@ import Billing from "../views/Billing.vue";
 import Profile from "../views/Profile.vue";
 import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
-import Product from "../views/Product.vue";
+// import Product from "../views/Product.vue";
+import ProductView from "../views/product/SanPham.vue";
 import Voucher from "../views/Voucher.vue";
 import InvoiceDetail from "../views/bills/InvoiceDetail.vue"; // Import component chi tiết hóa đơn
 
@@ -20,12 +21,28 @@ const routes = [
     name: "Dashboard",
     component: Dashboard,
   },
+  // {
+  //   path: "/product",
+  //   name: "Product",
+  //   component: Product,
+  //   children: [
+  //     { path: "keyboards", name: "Keyboards", component: () => import("../views/product/Keyboards.vue") },
+  //     { path: "mice", name: "Mice", component: () => import("../views/product/Mice.vue") },
+  //     { path: "headsets", name: "Headsets", component: () => import("../views/product/Headsets.vue") },
+  //     { path: "keycaps", name: "Keycaps", component: () => import("../views/product/Keycaps.vue") },
+  //     { path: "cases", name: "Cases", component: () => import("../views/product/Cases.vue") },
+  //     { path: "laptop-stands", name: "LaptopStands", component: () => import("../views/product/LaptopStands.vue") },
+  //     { path: "speakers", name: "Speakers", component: () => import("../views/product/Speakers.vue") },
+  //     { path: "mousepads", name: "Mousepads", component: () => import("../views/product/Mousepads.vue") },
+  //     { path: "cables", name: "Cables", component: () => import("../views/product/Cables.vue") },
+  //     { path: "accessories", name: "Accessories", component: () => import("../views/product/Accessories.vue") },
+  //   ],
+  // },
   {
-    path: "/product",
-    name: "Product",
-    component: Product,
+    path: '/product',
+    component: ProductView,
     children: [
-      { path: "keyboards", name: "Keyboards", component: () => import("../views/product/Keyboards.vue") },
+      { path: 'san-pham/hien-thi', component: () => import('../views/product/SanPham.vue') },
       { path: "mice", name: "Mice", component: () => import("../views/product/Mice.vue") },
       { path: "headsets", name: "Headsets", component: () => import("../views/product/Headsets.vue") },
       { path: "keycaps", name: "Keycaps", component: () => import("../views/product/Keycaps.vue") },

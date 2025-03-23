@@ -5,11 +5,12 @@
       <div class="card-header">Trạng thái đơn hàng</div>
       <div class="card-body">{{ hoaDon?.trangThai }}</div>
     </div>
-
+    <pre>{{ hoaDon }}</pre>
     <!-- Thông tin khách hàng -->
     <div class="card mb-3">
       <div class="card-header">Thông tin khách hàng</div>
       <div class="card-body">
+
         <div class="row">
           <div class="col-md-6">
             <div class="p-3 border rounded bg-white">
@@ -212,6 +213,7 @@ const selectedQuantity = ref(1);
 const fetchHoaDonDetail = async () => {
   try {
     const response = await api.get(`/hoa-don/detail/${route.params.id}`);
+    console.log('Dữ liệu hóa đơn:', response.data); // Kiểm tra dữ liệu trả về
     hoaDon.value = response.data;
     listLichSuHoaDonDto.value = response.data.listLichSuHoaDonDto || [];
     listDanhSachSanPham.value = response.data.listDanhSachSanPham || [];
@@ -221,14 +223,14 @@ const fetchHoaDonDetail = async () => {
 };
 
 // Hàm fetch sản phẩm có sẵn
-const fetchAvailableProducts = async () => {
-  try {
-    const response = await api.get('/san-pham/available');
-    availableProducts.value = response.data || [];
-  } catch (error) {
-    console.error('Lỗi khi tải sản phẩm có sẵn:', error);
-  }
-};
+// const fetchAvailableProducts = async () => {
+//   try {
+//     const response = await api.get('/san-pham/available');
+//     availableProducts.value = response.data || [];
+//   } catch (error) {
+//     console.error('Lỗi khi tải sản phẩm có sẵn:', error);
+//   }
+// };
 
 // Hàm mở modal thêm sản phẩm
 const openAddProductModal = () => {
@@ -288,7 +290,7 @@ const formatDate = (date) => {
 // Gọi hàm fetch dữ liệu khi component được mounted
 onMounted(() => {
   fetchHoaDonDetail();
-  fetchAvailableProducts();
+  // fetchAvailableProducts();
 });
 </script>
 

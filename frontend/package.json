@@ -1,10 +1,10 @@
 {
-  "name": "vue-argon-dashboard-2",
+  "name": "haven-polo-springboot",
   "version": "4.0.0",
   "private": true,
   "author": "Creative Tim",
   "license": "SEE LICENSE IN <https://www.creative-tim.com/license>",
-  "description": "VueJS version of Argon Dashboard 2 by Creative Tim",
+  "description": "VueJS version of Haven Polo 2 by Creative Haven",
   "homepage": "https://demos.creative-tim.com/vue-argon-dashboard/",
   "bugs": {
     "url": "https://github.com/creativetimofficial/vue-argon-dashboard/issues"

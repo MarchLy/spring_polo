@@ -15,10 +15,10 @@ const store = useStore();
             {{ new Date().getFullYear() }}, made with
             <i class="fa fa-heart"></i> by
             <a
-              href="https://www.creative-tim.com"
+              href="https://github.com/MarchLy"
               class="font-weight-bold"
               target="_blank"
-              >Creative Tim</a
+              >MarchLy Haven</a
             >
             for a better web.
           </div>
@@ -29,15 +29,15 @@ const store = useStore();
           >
             <li class="nav-item">
               <a
-                href="https://www.creative-tim.com"
+                href="https://github.com/MarchLy"
                 class="nav-link text-muted"
                 target="_blank"
-                >Creative Tim</a
+                >MarchLy Haven</a
               >
             </li>
             <li class="nav-item">
               <a
-                href="https://www.creative-tim.com/presentation"
+                href="https://github.com/MarchLy"
                 class="nav-link text-muted"
                 target="_blank"
                 >About Us</a
@@ -45,7 +45,7 @@ const store = useStore();
             </li>
             <li class="nav-item">
               <a
-                href="https://www.creative-tim.com/blog"
+                href="https://www.facebook.com/Marchly05/"
                 class="nav-link text-muted"
                 target="_blank"
                 >Blog</a
@@ -53,7 +53,7 @@ const store = useStore();
             </li>
             <li class="nav-item">
               <a
-                href="https://www.creative-tim.com/license"
+                href="https://github.com/MarchLy"
                 class="nav-link pe-0 text-muted"
                 target="_blank"
                 >License</a
