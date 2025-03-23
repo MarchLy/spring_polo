@@ -338,11 +338,11 @@ button {
 
 .status-card {
   display: inline-block;
-  min-width: 100px; /* Đảm bảo độ dài đồng đều */
+  min-width: 100%; /* Đảm bảo độ dài đồng đều */
   text-align: center;
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   opacity: 0.8; /* Làm màu nhạt hơn */
 }

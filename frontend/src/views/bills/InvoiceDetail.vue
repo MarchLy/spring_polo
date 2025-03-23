@@ -5,12 +5,12 @@
       <div class="card-header">Trạng thái đơn hàng</div>
       <div class="card-body">{{ hoaDon?.trangThai }}</div>
     </div>
-    <pre>{{ hoaDon }}</pre>
+
     <!-- Thông tin khách hàng -->
     <div class="card mb-3">
       <div class="card-header">Thông tin khách hàng</div>
       <div class="card-body">
-
+<!--        <pre>{{ hoaDon }}</pre>-->
         <div class="row">
           <div class="col-md-6">
             <div class="p-3 border rounded bg-white">
@@ -54,7 +54,7 @@
           <div class="col-md-3">
             <div class="p-3 border rounded bg-light">
               <strong>Phí vận chuyển</strong>
-              <p class="text-primary fw-bold">{{ hoaDon.phiVanChuyen }} đ</p>
+              <p class="text-primary fw-bold">{{ formatCurrency(hoaDon.phiVanChuyen) }}</p>
             </div>
           </div>
           <div class="col-md-3">
@@ -66,7 +66,7 @@
           <div class="col-md-3">
             <div class="p-3 border rounded bg-light">
               <strong>Tổng tiền</strong>
-              <p class="text-primary fw-bold">{{ hoaDon.tongTien }} đ</p>
+              <p class="text-primary fw-bold">{{ formatCurrency(hoaDon.tongTien) }}</p>
             </div>
           </div>
         </div>
@@ -93,7 +93,7 @@
           <tr v-for="(lshdDto, index) in listLichSuHoaDonDto" :key="index">
             <td>{{ index + 1 }}</td>
             <td>{{ lshdDto.maGiaoDich }}</td>
-            <td>{{ lshdDto.tongTien }} VND</td>
+            <td>{{ formatCurrency(lshdDto.tongTien) }}</td>
             <td>{{ formatDate(lshdDto.ngayThanhToan) }}</td>
             <td>{{ lshdDto.tenHinhThuc }}</td>
             <td :class="lshdDto.trangThai ? 'text-success' : 'text-danger'">
@@ -133,7 +133,7 @@
             <td>
               <h5>{{ sanPham.tenChiTietSp }}</h5>
               <p>Mã SP: {{ sanPham.maChiTietSp }}</p>
-              <p>Đơn giá: {{ formatCurrency(sanPham.donGia) }} đ</p>
+              <p>Đơn giá: {{ formatCurrency(sanPham.donGia) }}</p>
             </td>
             <td>
               <div class="product-actions">
@@ -142,7 +142,7 @@
                 <button class="btn btn-secondary" @click="increaseQuantity(sanPham)">+</button>
               </div>
             </td>
-            <td>{{ formatCurrency(sanPham.donGia * sanPham.soLuong) }} đ</td>
+            <td>{{ formatCurrency(sanPham.donGia * sanPham.soLuong) }}</td>
             <td>
               <button class="btn btn-danger btn-sm" @click="removeProduct(sanPham)">Xóa</button>
             </td>
@@ -213,8 +213,8 @@ const selectedQuantity = ref(1);
 const fetchHoaDonDetail = async () => {
   try {
     const response = await api.get(`/hoa-don/detail/${route.params.id}`);
-    console.log('Dữ liệu hóa đơn:', response.data); // Kiểm tra dữ liệu trả về
-    hoaDon.value = response.data;
+    console.log(response.data); // Kiểm tra dữ liệu trả về
+    hoaDon.value = response.data.hoaDon; // thêm .hoaDon để hiển thị dữ liệu ;))
     listLichSuHoaDonDto.value = response.data.listLichSuHoaDonDto || [];
     listDanhSachSanPham.value = response.data.listDanhSachSanPham || [];
   } catch (error) {
